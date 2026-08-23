@@ -12,7 +12,6 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public User save(User user) {
-        checkEmail(user);
         user.setId(getNextId());
         users.put(user.getId(), user);
         return user;
@@ -30,9 +29,6 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public User update(User user) {
-        if (user.getEmail() != null) {
-            checkEmail(user);
-        }
         User updatedUser = users.get(user.getId());
         if (user.getName() != null) {
             updatedUser.setName(user.getName());
@@ -57,7 +53,7 @@ public class UserRepositoryImp implements UserRepository {
         return ++currentMaxId;
     }
 
-    private void checkEmail(User user) {
+    public void checkEmail(User user) {
         List<User> users = getAllUsers();
         for (User u : users) {
             if (u.getEmail().contains(user.getEmail()) && !u.getId().equals(user.getId())) {

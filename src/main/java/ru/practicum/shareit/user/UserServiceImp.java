@@ -18,6 +18,7 @@ public class UserServiceImp implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUser(userDto);
+        userRepository.checkEmail(user);
         return UserMapper.matToUserDto(userRepository.save(user));
     }
 
@@ -43,6 +44,9 @@ public class UserServiceImp implements UserService {
         findById(id);
         User updatedUser = UserMapper.mapToUser(userDto);
         updatedUser.setId(id);
+        if (updatedUser.getEmail() != null) {
+            userRepository.checkEmail(updatedUser);
+        }
         return UserMapper.matToUserDto(userRepository.update(updatedUser));
     }
 
