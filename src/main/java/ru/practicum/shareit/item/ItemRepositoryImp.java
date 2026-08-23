@@ -1,7 +1,6 @@
 package ru.practicum.shareit.item;
 
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.user.User;
 
 import java.util.*;
