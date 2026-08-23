@@ -24,33 +24,28 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<ItemDto> create(@Valid @RequestBody ItemDto itemDto,
                                           @RequestHeader(USER_HEADER) Integer userId) {
-        Item item = ItemMapper.matToItem(itemDto);
-        Item createdItem = itemService.create(userId, item);
-        return ResponseEntity.ok(ItemMapper.mapToDto(createdItem));
+        return ResponseEntity.ok(itemService.create(userId, itemDto));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ItemDto> update(@Valid @PathVariable Integer id,
                                           @RequestBody ItemDto itemDto,
                                           @RequestHeader(USER_HEADER) Integer userId) {
-        Item item = ItemMapper.matToItem(itemDto);
-        return ResponseEntity.ok(ItemMapper.mapToDto(itemService.update(id, item, userId)));
+        return ResponseEntity.ok((itemService.update(id, itemDto, userId)));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ItemDto> getItem(@PathVariable Integer id) {
-        return ResponseEntity.ok(ItemMapper.mapToDto(itemService.findById(id)));
+        return ResponseEntity.ok((itemService.findById(id)));
     }
 
     @GetMapping
     public ResponseEntity<List<ItemDto>> getItemsByOwner(@RequestHeader(USER_HEADER) Integer userId) {
-        List<Item> items = itemService.findAllByOwner(userId);
-        return ResponseEntity.ok(ItemMapper.mapToListItemDto(items));
+        return ResponseEntity.ok(itemService.findAllByOwner(userId));
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<ItemDto>> searchItems(@RequestParam String text) {
-        List<Item> items = itemService.searchItems(text);
-        return ResponseEntity.ok(ItemMapper.mapToListItemDto(items));
+        return ResponseEntity.ok(itemService.searchItems(text));
     }
 }

@@ -1,16 +1,18 @@
 package ru.practicum.shareit.user;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import ru.practicum.shareit.exception.EmailValidationException;
 
 import java.util.*;
 
-@Repository
+@Component
 public class UserRepositoryImp implements UserRepository {
 
     private final Map<Integer, User> users = new HashMap<>();
 
     @Override
     public User save(User user) {
+        checkEmail(user);
         user.setId(getNextId());
         users.put(user.getId(), user);
         return user;
@@ -28,6 +30,9 @@ public class UserRepositoryImp implements UserRepository {
 
     @Override
     public User update(User user) {
+        if (user.getEmail() != null) {
+            checkEmail(user);
+        }
         User updatedUser = users.get(user.getId());
         if (user.getName() != null) {
             updatedUser.setName(user.getName());
@@ -50,5 +55,14 @@ public class UserRepositoryImp implements UserRepository {
                 .max()
                 .orElse(0);
         return ++currentMaxId;
+    }
+
+    private void checkEmail(User user) {
+        List<User> users = getAllUsers();
+        for (User u : users) {
+            if (u.getEmail().contains(user.getEmail()) && !u.getId().equals(user.getId())) {
+                throw new EmailValidationException("Пользователь с email = " + user.getEmail() + " уже существует");
+            }
+        }
     }
 }

@@ -1,9 +1,11 @@
 package ru.practicum.shareit.user;
 
+import lombok.experimental.UtilityClass;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import java.util.List;
 
+@UtilityClass
 public class UserMapper {
     public static UserDto matToUserDto(User user) {
         return new UserDto(

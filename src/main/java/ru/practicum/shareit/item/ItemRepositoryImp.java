@@ -1,12 +1,13 @@
 package ru.practicum.shareit.item;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.user.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository
+@Component
 public class ItemRepositoryImp implements ItemRepository {
     private final Map<Integer, Item> items = new HashMap<>();
 
@@ -51,8 +52,8 @@ public class ItemRepositoryImp implements ItemRepository {
     public List<Item> searchItems(String text) {
         Map<Integer, Item> searchedItems = items.entrySet().stream()
                 .filter(item -> Boolean.TRUE.equals(item.getValue().getAvailable()))
-                .filter(item -> item.getValue().getName().toLowerCase().contains(text.toLowerCase())
-                        || item.getValue().getDescription().toLowerCase().contains(text.toLowerCase()))
+                .filter(item -> item.getValue().getName().toLowerCase().contains(text)
+                        || item.getValue().getDescription().toLowerCase().contains(text))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return new ArrayList<>(searchedItems.values());
     }

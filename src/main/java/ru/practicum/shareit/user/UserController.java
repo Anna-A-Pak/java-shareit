@@ -22,27 +22,22 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid  @RequestBody UserDto userDto) {
-        User user = UserMapper.mapToUser(userDto);
-        User createdUser = userService.createUser(user);
-        UserDto createdUserDto = UserMapper.matToUserDto(createdUser);
-        return ResponseEntity.ok(createdUserDto);
+        return ResponseEntity.ok(userService.createUser(userDto));
     }
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(UserMapper.mapToListUserDto(users));
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUser(@PathVariable Integer id) {
-        return ResponseEntity.ok(UserMapper.matToUserDto(userService.findById(id)));
+        return ResponseEntity.ok(userService.findById(id));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<UserDto> update(@Valid @PathVariable Integer id, @RequestBody UserDto userDto) {
-        User user = UserMapper.mapToUser(userDto);
-        return ResponseEntity.ok(UserMapper.matToUserDto(userService.update(id, user)));
+        return ResponseEntity.ok(userService.update(id, userDto));
     }
 
     @DeleteMapping("/{id}")
