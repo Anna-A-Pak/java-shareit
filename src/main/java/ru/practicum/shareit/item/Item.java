@@ -1,25 +1,20 @@
-package ru.practicum.shareit.item.dto;
+package ru.practicum.shareit.item;
 
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
+
 @Data
-public class ItemDto {
+public class Item {
     private Integer id;
     private User owner;
-    @NotBlank
     private String name;
-    @NotBlank
     private String description;
-    @NotNull
     private Boolean available;
     private ItemRequest request;
 
-    public ItemDto(Integer id, String name, String description, Boolean available) {
+    public Item(Integer id, String name, String description, Boolean available) {
         this.id = id;
         this.name = name;
         this.description = description;
