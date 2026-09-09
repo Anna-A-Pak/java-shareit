@@ -1,25 +1,22 @@
 package ru.practicum.shareit.item;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemWithDatesDto;
 
 import java.util.List;
 
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/items")
 public class ItemController {
 
     private final ItemService itemService;
     public static final String USER_HEADER = "X-Sharer-User-Id";
-
-    @Autowired
-    public ItemController(ItemService itemService) {
-        this.itemService = itemService;
-    }
 
     @PostMapping
     public ResponseEntity<ItemDto> create(@Valid @RequestBody ItemDto itemDto,
@@ -40,12 +37,19 @@ public class ItemController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemDto>> getItemsByOwner(@RequestHeader(USER_HEADER) Integer userId) {
+    public ResponseEntity<List<ItemWithDatesDto>> getItemsByOwner(@RequestHeader(USER_HEADER) Integer userId) {
         return ResponseEntity.ok(itemService.findAllByOwner(userId));
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<ItemDto>> searchItems(@RequestParam String text) {
         return ResponseEntity.ok(itemService.searchItems(text));
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto,
+                                                    @PathVariable Integer itemId,
+                                                    @RequestHeader(USER_HEADER) Integer userId) {
+        return ResponseEntity.ok(itemService.createComment(commentDto, itemId, userId));
     }
 }

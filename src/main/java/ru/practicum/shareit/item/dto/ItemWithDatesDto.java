@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item.dto;
 
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class ItemDto {
+public class ItemWithDatesDto {
     private Integer id;
     private User owner;
     @NotBlank
@@ -21,11 +20,11 @@ public class ItemDto {
     @NotNull
     private Boolean available;
     private ItemRequest request;
-    private LocalDateTime lastBooking;
-    private LocalDateTime nextBooking;
+    private LocalDateTime lastBookingDate;
+    private LocalDateTime nextBookingDate;
     private List<CommentDto> comments;
 
-    public ItemDto(Integer id, String name, String description, Boolean available) {
+    public ItemWithDatesDto(Integer id, String name, String description, Boolean available) {
         this.id = id;
         this.name = name;
         this.description = description;

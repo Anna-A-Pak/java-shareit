@@ -18,13 +18,12 @@ public class UserServiceImp implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = UserMapper.mapToUser(userDto);
-        userRepository.checkEmail(user);
         return UserMapper.matToUserDto(userRepository.save(user));
     }
 
     @Override
     public List<UserDto> getAllUsers() {
-        return UserMapper.mapToListUserDto(userRepository.getAllUsers());
+        return UserMapper.mapToListUserDto(userRepository.findAll());
     }
 
     @Override
@@ -41,18 +40,23 @@ public class UserServiceImp implements UserService {
         if (id == null) {
             throw new ValidationException("Id должен быть указан");
         }
-        findById(id);
+        User user = userRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Пользователь с id = " + id + " не найден"));
         User updatedUser = UserMapper.mapToUser(userDto);
         updatedUser.setId(id);
-        if (updatedUser.getEmail() != null) {
-            userRepository.checkEmail(updatedUser);
+        if (userDto.getEmail() == null) {
+            updatedUser.setEmail(user.getEmail());
         }
-        return UserMapper.matToUserDto(userRepository.update(updatedUser));
+        if (updatedUser.getName() == null) {
+            updatedUser.setName(user.getName());
+        }
+        return UserMapper.matToUserDto(userRepository.save(updatedUser));
     }
 
     @Override
     public void delete(Integer id) {
         findById(id);
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }
