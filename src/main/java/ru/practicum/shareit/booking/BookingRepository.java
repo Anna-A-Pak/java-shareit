@@ -30,7 +30,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     List<Booking> findByBooker_IdAndStatus(
             Integer bookerId,
-            BookingStatus bookingStatus,
+            BookingState bookingState,
             Sort sort
     );
 
@@ -57,7 +57,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 
     List<Booking> findByItem_Owner_IdAndStatus(
             Integer ownerId,
-            BookingStatus bookingStatus,
+            BookingState bookingState,
             Sort sort
     );
 

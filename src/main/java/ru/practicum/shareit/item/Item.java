@@ -1,13 +1,15 @@
 package ru.practicum.shareit.item;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "items")
 @NoArgsConstructor
@@ -31,5 +33,18 @@ public class Item {
         this.name = name;
         this.description = description;
         this.available = available;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Item item)) return false;
+
+        return id != null && id.equals(item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

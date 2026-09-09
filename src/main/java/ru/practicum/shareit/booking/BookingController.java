@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
@@ -8,6 +9,7 @@ import ru.practicum.shareit.booking.dto.NewBookingDto;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/bookings")
 public class BookingController {
@@ -15,13 +17,8 @@ public class BookingController {
     private final BookingService bookingService;
     public static final String USER_HEADER = "X-Sharer-User-Id";
 
-    @Autowired
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
-
     @PostMapping
-    public ResponseEntity<BookingDto> create(@RequestBody NewBookingDto newBookingDto,
+    public ResponseEntity<BookingDto> create(@Valid @RequestBody NewBookingDto newBookingDto,
                                              @RequestHeader(USER_HEADER) Integer userId) {
         return ResponseEntity.ok(bookingService.create(userId, newBookingDto));
     }
