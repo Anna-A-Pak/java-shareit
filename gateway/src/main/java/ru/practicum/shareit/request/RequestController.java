@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.practicum.shareit.RequestHeaders;
 import ru.practicum.shareit.request.dto.RequestDto;
 
 
@@ -15,22 +16,21 @@ import ru.practicum.shareit.request.dto.RequestDto;
 @Validated
 public class RequestController {
 
-    public static final String USER_HEADER = "X-Sharer-User-Id";
     private final RequestClient requestClient;
 
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody RequestDto dto,
-                                                 @RequestHeader(USER_HEADER) Integer userId) {
+                                                 @RequestHeader(RequestHeaders.USER_HEADER) Integer userId) {
         return requestClient.create(userId, dto);
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAllByRequester(@RequestHeader(USER_HEADER) Integer userId) {
+    public ResponseEntity<Object> getAllByRequester(@RequestHeader(RequestHeaders.USER_HEADER) Integer userId) {
         return requestClient.getAllByRequester(userId);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Object> getAllRequests(@RequestHeader(USER_HEADER) Integer userId) {
+    public ResponseEntity<Object> getAllRequests(@RequestHeader(RequestHeaders.USER_HEADER) Integer userId) {
         return requestClient.getAllRequests(userId);
     }
 

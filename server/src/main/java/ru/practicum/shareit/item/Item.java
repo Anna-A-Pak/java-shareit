@@ -1,13 +1,12 @@
 package ru.practicum.shareit.item;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
-
-import java.util.Objects;
 
 
 @Getter
@@ -15,6 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "items")
 @NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Item {
     @Id
     @Column(name = "item_id", nullable = false)
@@ -46,16 +46,4 @@ public class Item {
         this.request = request;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof Item item)) return false;
-
-        return id != null && id.equals(item.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }

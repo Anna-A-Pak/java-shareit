@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "comments")
+@EqualsAndHashCode(of = "id")
 public class Comment {
     @Id
     @Column(name = "comment_id", nullable = false)
@@ -27,16 +29,4 @@ public class Comment {
     private User author;
     private LocalDateTime created;
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (!(object instanceof Comment comment)) return false;
-
-        return id != null && id.equals(comment.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

@@ -1,7 +1,5 @@
 package ru.practicum.shareit.item.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import ru.practicum.shareit.request.ItemRequest;
 import ru.practicum.shareit.user.User;
@@ -13,11 +11,8 @@ import java.util.List;
 public class ItemWithDatesDto {
     private Integer id;
     private User owner;
-    @NotBlank
     private String name;
-    @NotBlank
     private String description;
-    @NotNull
     private Boolean available;
     private ItemRequest request;
     private LocalDateTime lastBookingDate;

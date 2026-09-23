@@ -1,4 +1,4 @@
-package ru.practicum.shareit;
+package ru.practicum.shareit.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.shareit.user.UserController;
-import ru.practicum.shareit.user.UserService;
 import ru.practicum.shareit.user.dto.UserDto;
 
 import java.nio.charset.StandardCharsets;
@@ -63,11 +61,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.id").value(userDto1.getId()))
                 .andExpect(jsonPath("$.name").value(userDto1.getName()))
                 .andExpect(jsonPath("$.email").value(userDto1.getEmail()));
-
-        mockMvc.perform(post("/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(userDto2)))
-                .andExpect(status().isBadRequest());
     }
 
     @Test

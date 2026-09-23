@@ -1,17 +1,15 @@
 package ru.practicum.shareit.request.dto;
 
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemRequestDto {
     private Integer id;
-    @NotBlank
-    @Size(max = 200)
     private String description;
     private LocalDateTime created;
 
